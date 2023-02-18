@@ -112,7 +112,7 @@ app.post('/register', (req, res) => {
 
 //login with bcrypt
 //needs to insert the name and pass in the body
-app.post('/login', (req, res) => {
+app.post('/login', async(req, res) => {
     const name = req.body.name;
     const pass = req.body.pass;
     const student = students.find(student => student.name === name);
@@ -120,8 +120,7 @@ app.post('/login', (req, res) => {
         return res.send('Cannot find user');
     }
     try{
-        const compare = bcrypt.compare(pass, student.pass);
-        
+        const compare =await bcrypt.compare(pass, student.pass);
         if (compare){
             res.send('Logged in');
         }else{
